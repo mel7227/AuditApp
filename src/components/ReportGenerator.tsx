@@ -383,25 +383,12 @@ export const ReportGenerator: React.FC<ReportGeneratorProps> = ({ project, onClo
         }
       }
 
-      // Add footer to all pages
-      const totalPages = pdf.internal.getNumberOfPages();
-      for (let i = 1; i <= totalPages; i++) {
-        pdf.setPage(i);
-        const pageNumber = i;
-        
+      // Footer
+      if (settings.reportFooter) {
+        checkPageBreak(15);
         pdf.setFontSize(8);
-        pdf.setFont('helvetica', 'normal');
-        
-        // Page number on the right
-        const pageText = `Page ${pageNumber} of ${totalPages}`;
-        const pageTextWidth = pdf.getTextWidth(pageText);
-        pdf.text(pageText, pageWidth - margin - pageTextWidth, pageHeight - 5);
-        
-        // Footer text on the left (if exists)
-        if (settings.reportFooter) {
-          pdf.setFont('helvetica', 'italic');
-          pdf.text(settings.reportFooter, margin, pageHeight - 5);
-        }
+        pdf.setFont('helvetica', 'italic');
+        pdf.text(settings.reportFooter, margin, yPosition);
       }
 
       // Save the PDF

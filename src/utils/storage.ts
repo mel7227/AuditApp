@@ -34,7 +34,7 @@ export const storage = {
   getSettings(): Settings {
     const data = localStorage.getItem(SETTINGS_KEY);
     return data ? JSON.parse(data) : {
-      companyName: 'Site Audit Manager',
+      companyName: 'Food Factory Audits',
       preparedForLabel: 'Prepared For',
       assignedToLabel: 'Assigned To',
       issueLabel: 'Issue',

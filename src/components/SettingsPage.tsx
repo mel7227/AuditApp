@@ -57,12 +57,12 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
               <ArrowLeft size={20} />
             </button>
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-blue-600 rounded-lg flex items-center justify-center">
                 <Building2 size={20} className="text-white" />
               </div>
               <div>
                 <h1 className="text-xl font-bold text-gray-900">Settings</h1>
-                <p className="text-sm text-gray-600">Customize your site audit reports and company details</p>
+                <p className="text-sm text-gray-600">Customize your audit reports and company details</p>
               </div>
             </div>
           </div>
@@ -75,7 +75,7 @@ export const SettingsPage: React.FC<SettingsPageProps> = ({ onBack }) => {
           {/* Company Details */}
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
             <div className="flex items-center gap-3 mb-6">
-              <Building2 size={20} className="text-blue-600" />
+              <Building2 size={20} className="text-green-600" />
               <h2 className="text-xl font-semibold text-gray-900">Company Details</h2>
             </div>
 
