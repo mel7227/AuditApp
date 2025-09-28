@@ -50,8 +50,8 @@ function App() {
               <ClipboardList size={20} className="text-white" />
             </div>
             <div>
-              <h1 className="font-bold text-lg text-gray-900">Food Factory</h1>
-              <p className="text-sm text-gray-600">Audit Manager</p>
+              <h1 className="font-bold text-lg text-gray-900">Site Audit</h1>
+              <p className="text-sm text-gray-600">Manager</p>
             </div>
           </div>
         </div>
