@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Plus, Calendar, MapPin, FileText, Search, Filter } from 'lucide-react';
+import { Plus, Calendar, MapPin, FileText, Search, Filter, Trash2 } from 'lucide-react';
 import { Project } from '../types';
 import { storage } from '../utils/storage';
 import { CreateProjectModal } from './CreateProjectModal';
@@ -24,6 +24,13 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ onSelectProject }) =
     setShowCreateModal(false);
   };
 
+  const handleDeleteProject = (projectId: string, projectName: string) => {
+    if (window.confirm(`Are you sure you want to delete "${projectName}"? This action cannot be undone and will permanently remove all issues, photos, and data associated with this project.`)) {
+      storage.deleteProject(projectId);
+      setProjects(storage.getProjects());
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed': return 'bg-green-100 text-green-800';
@@ -45,7 +52,7 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ onSelectProject }) =
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <h1 className="text-2xl font-bold text-gray-900">Audit Projects</h1>
+            <h1 className="text-2xl font-bold text-gray-900">Site Audit Projects</h1>
             <button
               onClick={() => setShowCreateModal(true)}
               className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-colors"
@@ -110,17 +117,21 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ onSelectProject }) =
             {filteredProjects.map((project) => (
               <div
                 key={project.id}
-                onClick={() => onSelectProject(project.id)}
-                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer border border-gray-200 hover:border-green-300"
+                className="bg-white rounded-lg shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200 hover:border-green-300 relative group"
               >
-                <div className="p-6">
+                <div 
+                  className="p-6 cursor-pointer"
+                  onClick={() => onSelectProject(project.id)}
+                >
                   <div className="flex items-start justify-between mb-4">
                     <h3 className="font-semibold text-lg text-gray-900 line-clamp-2">
                       {project.name}
                     </h3>
-                    <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}>
-                      {project.status.replace('-', ' ')}
-                    </span>
+                    <div className="flex items-center gap-2">
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium capitalize ${getStatusColor(project.status)}`}>
+                        {project.status.replace('-', ' ')}
+                      </span>
+                    </div>
                   </div>
 
                   <div className="space-y-2 mb-4">
@@ -143,6 +154,18 @@ export const ProjectsPage: React.FC<ProjectsPageProps> = ({ onSelectProject }) =
                     </span>
                   </div>
                 </div>
+                
+                {/* Delete Button */}
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleDeleteProject(project.id, project.name);
+                  }}
+                  className="absolute top-2 right-2 p-2 bg-red-600 text-white rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-700"
+                  title="Delete Project"
+                >
+                  <Trash2 size={16} />
+                </button>
               </div>
             ))}
           </div>
